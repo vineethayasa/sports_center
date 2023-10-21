@@ -15,7 +15,7 @@ const classNames = (...classes: string[]): string =>
 
 const Appbar = () => {
   return (
-    <Disclosure as="nav" className="bg-gray-200 border-b border-slate-200">
+    <Disclosure as="nav" className="bg-gray-300 border-b border-slate-200">
       {({}) => (
         <div className=" mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex h-16 items-center justify-between">
