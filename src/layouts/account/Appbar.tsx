@@ -22,7 +22,7 @@ const Appbar = () => {
             <div className="flex items-center">
               <div className="flex-shrink-0 mr-2">
                 <img
-                  className="h-12 w-12 rounded-full border border-black"
+                  className="h-11 w-11 rounded-full border border-white"
                   src={Logo}
                   alt="Logo"
                 />

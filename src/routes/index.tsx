@@ -4,6 +4,7 @@ import Signup from "../pages/signup";
 import Dashboard from "../pages/main";
 import Logout from "../pages/logout";
 import Articles from "../pages/articles";
+import Matches from "../pages/matches";
 
 const router = createBrowserRouter([
   {
@@ -12,7 +13,12 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <Articles />,
+        element: (
+          <>
+            <Matches />
+            <Articles />
+          </>
+        ),
       },
     ],
   },

@@ -35,7 +35,7 @@ const Articles: React.FC<ArticleDetailsProps> = ({ article }) => {
       <a
         href="#"
         onClick={openDialog}
-        className="text-blue-500 hover:underline"
+        className="text-blue-600 hover:underline"
       >
         Read More
       </a>
