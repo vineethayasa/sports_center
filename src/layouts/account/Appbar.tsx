@@ -17,8 +17,8 @@ const Appbar = () => {
   return (
     <Disclosure as="nav" className="bg-blue-600 border-b border-slate-200">
       {({}) => (
-        <div className=" mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="flex h-16 items-center justify-between">
+        <div className="px-4 ml-6">
+          <div className="flex h-16 items-center justify-between ">
             <div className="flex items-center">
               <div className="flex-shrink-0 mr-2">
                 <img
@@ -27,15 +27,20 @@ const Appbar = () => {
                   alt="Logo"
                 />
               </div>
-              <div className="ml-3 text-xl font-bold text-gray-100">Sports Center</div>
+              <div className="ml-3 text-xl font-bold text-gray-100">
+                Sports Center
+              </div>
             </div>
 
             <div className="hidden md:block">
-              <div className="ml-4 flex items-center md:ml-6">
-                <Menu as="div" className="relative ml-3">
+              <div className="flex items-center">
+                <Menu as="div" className="relative">
                   <div>
                     <Menu.Button className="rounded-full p-1 text-gray-400 hover:text-blue-600">
-                      <UserCircleIcon className="h-8 w-8 text-white" aria-hidden="true" />
+                      <UserCircleIcon
+                        className="h-8 w-8 text-white mr-2"
+                        aria-hidden="true"
+                      />
                     </Menu.Button>
                   </div>
                   <Transition

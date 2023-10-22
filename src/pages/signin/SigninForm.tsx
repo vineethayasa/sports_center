@@ -43,7 +43,9 @@ const SigninForm = () => {
     <div className="max-w-md mx-auto p-2 bg-white rounded-md">
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="mb-4">
-          <label className="block text-gray-700 font-semibold mb-2">Email:</label>
+          <label className="block text-gray-700 font-semibold mb-2">
+            Email:
+          </label>
           <input
             type="email"
             id="email"

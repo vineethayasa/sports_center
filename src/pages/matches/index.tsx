@@ -4,7 +4,7 @@ const Matches = () => {
   return (
     <>
       <div>
-        <h2 className="text-2xl font-bold ">Matches</h2>
+        <h2 className="text-2xl font-bold ml-2">Matches</h2>
       </div>
       <MatchesList />
     </>

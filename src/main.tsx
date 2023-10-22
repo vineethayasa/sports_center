@@ -8,14 +8,12 @@ import { MatchProvider } from "./context/matches/context.tsx";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    
     <SportProvider>
       <ArticleProvider>
-      <MatchProvider>
-      <App />
-      </MatchProvider>
+        <MatchProvider>
+          <App />
+        </MatchProvider>
       </ArticleProvider>
     </SportProvider>
-    
   </React.StrictMode>,
 );

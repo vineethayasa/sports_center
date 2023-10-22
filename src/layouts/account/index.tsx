@@ -1,6 +1,5 @@
 import { Outlet } from "react-router-dom";
 import Appbar from "./Appbar";
-// import React from "react";
 
 const AccountLayout = () => {
   return (
