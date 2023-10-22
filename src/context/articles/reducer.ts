@@ -22,8 +22,7 @@ export interface ArticleState {
 export type ArticleActions =
   | { type: "FETCH_ARTICLE_REQUEST" }
   | { type: "FETCH_ARTICLE_SUCCESS"; payload: Article[] }
-  | { type: "FETCH_ARTICLE_FAILURE"; payload: string }
-  | { type: "FILTER_ARTICLES_BY_SPORT"; payload: number };
+  | { type: "FETCH_ARTICLE_FAILURE"; payload: string };
 
 export const initialState: ArticleState = {
   articles: [],

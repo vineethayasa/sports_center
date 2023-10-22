@@ -15,7 +15,7 @@ const classNames = (...classes: string[]): string =>
 
 const Appbar = () => {
   return (
-    <Disclosure as="nav" className="bg-gray-300 border-b border-slate-200">
+    <Disclosure as="nav" className="bg-blue-600 border-b border-slate-200">
       {({}) => (
         <div className=" mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex h-16 items-center justify-between">
@@ -27,7 +27,7 @@ const Appbar = () => {
                   alt="Logo"
                 />
               </div>
-              <div className="ml-3 text-xl font-bold">Sports Center</div>
+              <div className="ml-3 text-xl font-bold text-gray-100">Sports Center</div>
             </div>
 
             <div className="hidden md:block">
@@ -35,7 +35,7 @@ const Appbar = () => {
                 <Menu as="div" className="relative ml-3">
                   <div>
                     <Menu.Button className="rounded-full p-1 text-gray-400 hover:text-blue-600">
-                      <UserCircleIcon className="h-8 w-8" aria-hidden="true" />
+                      <UserCircleIcon className="h-8 w-8 text-white" aria-hidden="true" />
                     </Menu.Button>
                   </div>
                   <Transition
