@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { Fragment, useState, useEffect } from "react";
 import { Dialog, Transition } from "@headlessui/react";
@@ -12,7 +13,7 @@ const Matches: React.FC<MatchDetailsProps> = ({ match }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [currentMatch, setMatch] = useState<Match | null>(null);
 
-  useEffect(() => {
+  const fetchData = () => {
     fetchMatchById(match.id!)
       .then((data) => {
         setMatch(data || null);
@@ -20,7 +21,15 @@ const Matches: React.FC<MatchDetailsProps> = ({ match }) => {
       .catch((error) => {
         console.log(error);
       });
+  };
+
+  useEffect(() => {
+    fetchData();
   }, [match.id]);
+
+  const refreshData = () => {
+    fetchData();
+  };
 
   const openDialog = () => {
     setIsOpen(true);
@@ -34,8 +43,27 @@ const Matches: React.FC<MatchDetailsProps> = ({ match }) => {
     <>
       {currentMatch && (
         <>
-          <h3 className="text-lg font-semibold mb-2">
-            {currentMatch.sportName}
+          <h3 className="text-lg font-semibold mb-2 flex justify-between items-center">
+            <span>{currentMatch.sportName}</span>
+            <button
+              className="focus:outline-none hover:shadow-lg hover:bg-gray-100 hover:rounded-full "
+              onClick={refreshData}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth="1.5"
+                stroke="currentColor"
+                className="w-6 h-6"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99"
+                />
+              </svg>
+            </button>
           </h3>
           <p>
             <strong>Location:</strong> {currentMatch.location}
@@ -100,9 +128,17 @@ const Matches: React.FC<MatchDetailsProps> = ({ match }) => {
                   as="h3"
                   className="text-lg font-bold leading-6 text-blue-700"
                 >
-                  {currentMatch?.sportName}
+                  {currentMatch?.name}
                 </Dialog.Title>
                 <div className="mt-4">
+                  <p className="text-m font-medium leading-6 text-gray-900">
+                    Sport:
+                  </p>
+                  <p className="text-m text-gray-700">
+                    {currentMatch?.sportName}
+                  </p>
+                </div>
+                <div className="mt-2">
                   <p className="text-m font-medium leading-6 text-gray-900">
                     Location:
                   </p>
