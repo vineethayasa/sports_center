@@ -37,7 +37,8 @@ export const fetchMatchById = async (id: number) => {
       },
     });
     const data = await response.json();
-    // console.log(data);
+    console.log(data.score);
+    console.log("ggggg");
     return data;
   } catch (error) {
     console.log("Error fetching match:", error);

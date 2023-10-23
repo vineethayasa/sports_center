@@ -3,14 +3,19 @@ export interface Match {
   name: string;
   location: string;
   sportName: string;
+  startsAt: string;
   endsAt: string;
   isRunning: boolean;
   teams: {
     id: number;
     name: string;
   }[];
+  story: string;
+  playingTeam: number;
+  score: {
+    [teamName: string]: string;
+  };
 }
-
 export interface MatchState {
   matches: Match[];
   isLoading: boolean;
