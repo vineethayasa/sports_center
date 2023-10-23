@@ -1,5 +1,5 @@
 import ArticlesList from "./ArticlesList";
-import Favorites from "./favorites";
+import Favorites from "./Favorites";
 
 const Articles = () => {
   return (
