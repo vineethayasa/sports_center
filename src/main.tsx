@@ -5,13 +5,16 @@ import "./index.css";
 import { ArticleProvider } from "./context/articles/context.tsx";
 import { SportProvider } from "./context/sports/context.tsx";
 import { MatchProvider } from "./context/matches/context.tsx";
+import { TeamProvider } from "./context/teams/context.tsx";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <SportProvider>
       <ArticleProvider>
         <MatchProvider>
-          <App />
+          <TeamProvider>
+            <App />
+          </TeamProvider>
         </MatchProvider>
       </ArticleProvider>
     </SportProvider>
