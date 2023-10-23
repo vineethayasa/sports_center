@@ -72,13 +72,13 @@ const Articles: React.FC<ArticleDetailsProps> = ({ article }) => {
               <div className="inline-block w-full max-w-4xl p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl">
                 <Dialog.Title
                   as="h3"
-                  className="text-lg font-medium leading-6 text-gray-900"
+                  className="text-lg font-bold leading-6 text-blue-600"
                 >
                   {currentarticle?.title}
                 </Dialog.Title>
                 <div className="mt-4">
                   <p className="text-sm text-gray-700">
-                    Date:{" "}
+                    <span className="text-blue-700 font-bold">Date:</span>{" "}
                     {currentarticle?.date
                       ? currentarticle.date.slice(0, 10)
                       : "Unknown"}
@@ -86,13 +86,13 @@ const Articles: React.FC<ArticleDetailsProps> = ({ article }) => {
                 </div>
                 <div className="mt-4">
                   <p className="text-sm text-gray-700">
-                    {" "}
-                    Sport:{" "}
+                    <span className="text-blue-700 font-bold">Sport:</span>{" "}
                     {currentarticle?.sport
                       ? currentarticle.sport.name
                       : "Unknown"}
                   </p>
                 </div>
+
                 <div className="mt-4">
                   <p className="text-sm text-gray-700">
                     {currentarticle?.content}

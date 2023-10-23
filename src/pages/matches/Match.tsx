@@ -131,7 +131,7 @@ const Matches: React.FC<MatchDetailsProps> = ({ match }) => {
                   {currentMatch?.name}
                 </Dialog.Title>
                 <div className="mt-4">
-                  <p className="text-m font-medium leading-6 text-gray-900">
+                  <p className="text-m font-medium leading-6 text-blue-800">
                     Sport:
                   </p>
                   <p className="text-m text-gray-700">
@@ -139,7 +139,7 @@ const Matches: React.FC<MatchDetailsProps> = ({ match }) => {
                   </p>
                 </div>
                 <div className="mt-2">
-                  <p className="text-m font-medium leading-6 text-gray-900">
+                  <p className="text-m font-medium leading-6 text-blue-800">
                     Location:
                   </p>
                   <p className="text-m text-gray-700">
@@ -147,7 +147,7 @@ const Matches: React.FC<MatchDetailsProps> = ({ match }) => {
                   </p>
                 </div>
                 <div>
-                  <p className="text-m mt-1 font-medium leading-6 text-gray-900">
+                  <p className="text-m mt-1 font-medium leading-6 text-blue-800">
                     Score:
                   </p>
                   <ul>

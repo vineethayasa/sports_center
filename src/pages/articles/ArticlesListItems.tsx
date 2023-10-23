@@ -81,6 +81,11 @@ const ArticlesListItems: React.FC<Props> = ({ sports }) => {
               <Articles article={article} />
             </div>
           ))}
+          {filteredArticles.length === 0 && (
+            <div className="text-red-500 text-lg font-bold mt-4">
+              <p>No data</p>
+            </div>
+          )}
         </>
       )}
     </>
