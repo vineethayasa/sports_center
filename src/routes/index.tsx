@@ -5,6 +5,7 @@ import Dashboard from "../pages/main";
 import Logout from "../pages/logout";
 import Articles from "../pages/articles";
 import Matches from "../pages/matches";
+import Notfound from "../pages/Notfound";
 
 const router = createBrowserRouter([
   {
@@ -33,6 +34,10 @@ const router = createBrowserRouter([
   {
     path: "/logout",
     element: <Logout />,
+  },
+  {
+    path: "*",
+    element: <Notfound />,
   },
 ]);
 

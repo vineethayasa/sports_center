@@ -27,6 +27,10 @@ const Matches: React.FC<MatchDetailsProps> = ({ match }) => {
     fetchData();
   }, [match.id]);
 
+  if (!currentMatch) {
+    return <div>Loading...</div>;
+  }
+
   const refreshData = () => {
     fetchData();
   };
@@ -79,13 +83,12 @@ const Matches: React.FC<MatchDetailsProps> = ({ match }) => {
                 </li>
               ))}
           </ul>
-          <a
-            href="#"
+          <button
             onClick={openDialog}
             className="text-blue-600 hover:underline"
           >
             Read More
-          </a>
+          </button>
         </>
       )}
       <Transition show={isOpen} as={Fragment}>
@@ -104,7 +107,7 @@ const Matches: React.FC<MatchDetailsProps> = ({ match }) => {
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <Dialog.Overlay className="fixed inset-0 bg-black opacity-10" />
+              <Dialog.Overlay className="fixed inset-0 bg-black opacity-25" />
             </Transition.Child>
 
             <span

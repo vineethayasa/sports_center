@@ -50,7 +50,7 @@ const Articles: React.FC<ArticleDetailsProps> = ({ article }) => {
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <Dialog.Overlay className="fixed inset-0 bg-black opacity-10" />
+              <Dialog.Overlay className="fixed inset-0 bg-black opacity-25" />
             </Transition.Child>
 
             <span

@@ -1,6 +1,5 @@
-// import React from "react";
 import { API_ENDPOINT } from "../../config/constants";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useForm, SubmitHandler } from "react-hook-form";
 
 type Inputs = {
@@ -81,10 +80,15 @@ const SignupForm = () => {
       </div>
       <button
         type="submit"
-        className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-md focus:outline-none focus:shadow-outline-gray mt-4"
+        className="mt-2 w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-md focus:outline-none focus:shadow-outline-gray mt-4"
       >
         Sign up
       </button>
+      <div className="mt-4 text-center">
+        <div className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-md focus:outline-none focus:shadow-outline-blue">
+          <Link to="/">Browse Without Signing Up</Link>
+        </div>
+      </div>
     </form>
   );
 };
