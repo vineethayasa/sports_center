@@ -3,17 +3,28 @@ import { Fragment } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { UserCircleIcon } from "@heroicons/react/24/outline";
 import Logo from "../../assets/images/logo.png";
+import Preferences from "./Preferences";
 
-const userNavigation = [
+let userNavigation = [
   { name: "Login", href: "/signin" },
   { name: "Sign up", href: "/signup" },
+];
+
+const userNavigation2 = [
   { name: "Sign out", href: "/logout" },
+  { name: "Change Password", href: "/logout" },
 ];
 
 const classNames = (...classes: string[]): string =>
   classes.filter(Boolean).join(" ");
 
 const Appbar = () => {
+  let auth = false;
+  if (localStorage.getItem("authToken")) {
+    userNavigation = userNavigation2;
+    auth = true;
+  }
+
   return (
     <Disclosure as="nav" className="bg-blue-600 border-b border-slate-200">
       {({}) => (
@@ -36,7 +47,8 @@ const Appbar = () => {
               <div className="flex items-center">
                 <Menu as="div" className="relative">
                   <div>
-                    <Menu.Button className="rounded-full p-1 text-gray-400 hover:text-blue-600">
+                    {auth && <Preferences />}
+                    <Menu.Button className="ml-2 rounded-full p-1 text-gray-400 hover:text-blue-600">
                       <UserCircleIcon
                         className="h-8 w-8 text-white mr-2"
                         aria-hidden="true"

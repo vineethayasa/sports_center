@@ -6,6 +6,7 @@ import { ArticleProvider } from "./context/articles/context.tsx";
 import { SportProvider } from "./context/sports/context.tsx";
 import { MatchProvider } from "./context/matches/context.tsx";
 import { TeamProvider } from "./context/teams/context.tsx";
+import { PreferenceProvider } from "./context/preferences/context.tsx";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
@@ -13,7 +14,9 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
       <ArticleProvider>
         <MatchProvider>
           <TeamProvider>
-            <App />
+            <PreferenceProvider>
+              <App />
+            </PreferenceProvider>
           </TeamProvider>
         </MatchProvider>
       </ArticleProvider>
