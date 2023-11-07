@@ -34,7 +34,7 @@ const SignupForm = () => {
         throw new Error("Sign-up failed");
       }
       const data = await response.json();
-      localStorage.setItem("authToken", data.token);
+      localStorage.setItem("authToken", data.auth_token);
       localStorage.setItem("userData", JSON.stringify(data.user));
       navigate("/");
       console.log("Sign-up successful");

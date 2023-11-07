@@ -15,11 +15,12 @@ const MatchesList: React.FC = () => {
 
   const state: any = useMatchState();
   const { matches } = state;
+  const liveMatches = matches.filter((match: Match) => match.isRunning);
 
   return (
     <div className="overflow-x-auto p-4">
       <div className="flex space-x-4">
-        {matches.map((match: Match) => (
+        {liveMatches.map((match: Match) => (
           <div
             key={match.id}
             className="flex-shrink-0 w-64 bg-white rounded-lg shadow-md p-4"

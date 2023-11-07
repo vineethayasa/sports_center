@@ -4,6 +4,8 @@ import { useArticleState } from "../../context/articles/context";
 import Articles from "./Article";
 import { Sport } from "../../context/sports/reducer";
 import { Article } from "../../context/articles/reducer";
+import { usePreferenceState } from "../../context/preferences/context";
+import { Team } from "../../context/teams/reducer";
 
 interface Props {
   sports: Sport[];
@@ -12,12 +14,39 @@ interface Props {
 const ArticlesListItems: React.FC<Props> = ({ sports }) => {
   const state: any = useArticleState();
 
+  const state2: any = usePreferenceState();
+  const { preferences } = state2;
+  console.log(preferences);
+  console.log("preferences");
+
+  const checkAuthentication = () => {
+    return !!localStorage.getItem("authToken");
+  };
+
   const { articles, isLoading, isError, errorMessage } = state;
   const [selectedSport, setSelectedSport] = useState<number | null>(null);
 
-  const filteredArticles = selectedSport
-    ? articles.filter((article: Article) => article.sport.id === selectedSport)
-    : articles;
+  const filterArticlesByPreferences = (article: Article) => {
+    if (preferences && preferences.favoriteTeams) {
+      const articleTeams = article.teams.map((team: Team) => team.name);
+      return articleTeams.some((team) =>
+        preferences.favoriteTeams.includes(team),
+      );
+    }
+    return true;
+  };
+
+  const filteredArticles = checkAuthentication()
+    ? selectedSport
+      ? articles
+          .filter((article: Article) => article.sport.id === selectedSport)
+          .filter((article: Article) => filterArticlesByPreferences(article))
+      : articles.filter((article: Article) =>
+          filterArticlesByPreferences(article),
+        )
+    : articles.filter((article: Article) =>
+        filterArticlesByPreferences(article),
+      );
 
   return (
     <>
@@ -52,7 +81,7 @@ const ArticlesListItems: React.FC<Props> = ({ sports }) => {
       ) : isError ? (
         <span>{errorMessage}</span>
       ) : (
-        <>
+        <div style={{ height: "552px", overflowY: "scroll" }}>
           {filteredArticles.map((article: Article) => (
             <div
               key={article.id}
@@ -86,7 +115,7 @@ const ArticlesListItems: React.FC<Props> = ({ sports }) => {
               <p>No data</p>
             </div>
           )}
-        </>
+        </div>
       )}
     </>
   );

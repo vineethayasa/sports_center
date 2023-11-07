@@ -3,7 +3,10 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { Cog8ToothIcon } from "@heroicons/react/24/outline";
-import { fetchPreferences } from "../../context/preferences/actions";
+import {
+  fetchPreferences,
+  updatePreferences,
+} from "../../context/preferences/actions";
 import { fetchSports } from "../../context/sports/actions";
 import { fetchTeams } from "../../context/teams/actions";
 import {
@@ -17,15 +20,24 @@ import { Team } from "../../context/teams/reducer";
 
 const Preferences: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [selectedSports, setSelectedSports] = useState<string[]>([]);
+  const [selectedTeams, setSelectedTeams] = useState<string[]>([]);
 
   const dispatchPreferences = usePreferenceDispatch();
   const dispatchSports = useSportDispatch();
   const dispatchTeams = useTeamDispatch();
 
+  const [authenticated, setAuthenticated] = useState(false);
+
   useEffect(() => {
-    fetchPreferences(dispatchPreferences);
-    fetchSports(dispatchSports);
-    fetchTeams(dispatchTeams);
+    const isAuthenticated = checkAuthentication();
+    setAuthenticated(isAuthenticated);
+
+    if (isAuthenticated) {
+      fetchPreferences(dispatchPreferences);
+      fetchSports(dispatchSports);
+      fetchTeams(dispatchTeams);
+    }
   }, [dispatchPreferences, dispatchSports, dispatchTeams]);
 
   const state: any = usePreferenceState();
@@ -37,17 +49,70 @@ const Preferences: React.FC = () => {
   const state3: any = useTeamState();
   const { teams } = state3;
 
-  console.log(preferences);
-  console.log(sports);
-  console.log(teams);
-  console.log("gsdf");
+  const checkAuthentication = () => {
+    return !!localStorage.getItem("authToken");
+  };
+
+  useEffect(() => {
+    if (preferences.favoriteSports && preferences.favoriteSports.length > 0) {
+      setSelectedSports(preferences.favoriteSports);
+    } else {
+      setSelectedSports(sports.map((sport: Sport) => sport.name));
+    }
+
+    if (preferences.favoriteTeams && preferences.favoriteTeams.length > 0) {
+      setSelectedTeams(preferences.favoriteTeams);
+    } else {
+      setSelectedTeams(teams.map((team: Team) => team.name));
+    }
+  }, [preferences, sports, teams]);
 
   const openDialog = () => {
-    setIsOpen(true);
+    if (authenticated) {
+      setIsOpen(true);
+    } else {
+      console.error("User is not authenticated");
+    }
   };
 
   const closeDialog = () => {
     setIsOpen(false);
+  };
+
+  const handleSportCheckboxChange = (sport: string) => {
+    setSelectedSports((prevSelectedSports) => {
+      if (prevSelectedSports.includes(sport)) {
+        return prevSelectedSports.filter((s) => s !== sport);
+      } else {
+        return [...prevSelectedSports, sport];
+      }
+    });
+  };
+
+  const handleTeamCheckboxChange = (team: string) => {
+    setSelectedTeams((prevSelectedTeams) => {
+      if (prevSelectedTeams.includes(team)) {
+        return prevSelectedTeams.filter((t) => t !== team);
+      } else {
+        return [...prevSelectedTeams, team];
+      }
+    });
+  };
+
+  const handleSavePreferences = () => {
+    const updatedPreferences = {
+      favoriteSports: selectedSports,
+      favoriteTeams: selectedTeams,
+    };
+
+    if (authenticated) {
+      updatePreferences(dispatchPreferences, updatedPreferences);
+      console.log("Preferences updated:", updatedPreferences);
+    } else {
+      console.error("User is not authenticated");
+    }
+
+    closeDialog();
   };
 
   return (
@@ -105,6 +170,8 @@ const Preferences: React.FC = () => {
                         <input
                           type="checkbox"
                           className="form-checkbox text-blue-600"
+                          checked={selectedSports.includes(sport.name)}
+                          onChange={() => handleSportCheckboxChange(sport.name)}
                         />
                         <span className="ml-2">{sport.name}</span>
                       </label>
@@ -117,6 +184,8 @@ const Preferences: React.FC = () => {
                         <input
                           type="checkbox"
                           className="form-checkbox text-blue-600"
+                          checked={selectedSports.includes(sport.name)}
+                          onChange={() => handleSportCheckboxChange(sport.name)}
                         />
                         <span className="ml-2">{sport.name}</span>
                       </label>
@@ -137,6 +206,8 @@ const Preferences: React.FC = () => {
                         <input
                           type="checkbox"
                           className="form-checkbox text-blue-600"
+                          checked={selectedTeams.includes(team.name)}
+                          onChange={() => handleTeamCheckboxChange(team.name)}
                         />
                         <span className="ml-2">{team.name}</span>
                       </label>
@@ -149,6 +220,8 @@ const Preferences: React.FC = () => {
                         <input
                           type="checkbox"
                           className="form-checkbox text-blue-600"
+                          checked={selectedTeams.includes(team.name)}
+                          onChange={() => handleTeamCheckboxChange(team.name)}
                         />
                         <span className="ml-2">{team.name}</span>
                       </label>
@@ -159,13 +232,14 @@ const Preferences: React.FC = () => {
                 <div className="mt-4 text-right">
                   <button
                     type="button"
+                    onClick={handleSavePreferences}
                     className="inline-flex justify-center px-4 py-2 mr-2 text-sm font-medium text-white bg-blue-600 border border-transparent rounded-md hover:bg-blue-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500"
                   >
                     Save
                   </button>
                   <button
                     type="button"
-                    className="inline-flex justify-center px-4 py-2 mr-2 text-sm font-medium text-white bg-blue-600 border border-transparent rounded-md hover:bg-blue-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500"
+                    className="inline-flex justify-center px-4 py-2 mr-2 text-sm font-medium text-white bg-blue-600 border border-transparent rounded-md hover.bg-blue-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500"
                     onClick={closeDialog}
                   >
                     Close

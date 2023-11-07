@@ -14,9 +14,9 @@ export const fetchSports = async (dispatch: any) => {
       },
     });
     const data = await response.json();
-    console.log(data);
+    // console.log(data);
     const sports: Sport[] = data.sports;
-    console.log(sports);
+    // console.log(sports);
 
     dispatch({ type: "FETCH_SPORT_SUCCESS", payload: sports });
   } catch (error) {

@@ -15,7 +15,7 @@ export const fetchMatches = async (dispatch: any) => {
     });
     const data = await response.json();
     const matches: Match[] = data.matches;
-    console.log(matches);
+    // console.log(matches);
     dispatch({ type: "FETCH_MATCH_SUCCESS", payload: matches });
   } catch (error) {
     console.log("Error fetching matches:", error);
@@ -37,7 +37,7 @@ export const fetchMatchById = async (id: number) => {
       },
     });
     const data = await response.json();
-    console.log(data.score);
+    // console.log(data.score);
     return data;
   } catch (error) {
     console.log("Error fetching match:", error);

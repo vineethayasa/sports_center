@@ -30,7 +30,7 @@ const SigninForm = () => {
       console.log("Sign-in successful");
       const responseData = await response.json();
 
-      localStorage.setItem("authToken", responseData.token);
+      localStorage.setItem("authToken", responseData.auth_token);
       localStorage.setItem("userData", JSON.stringify(responseData.user));
 
       navigate("/");

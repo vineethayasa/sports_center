@@ -15,6 +15,12 @@ import { Article } from "../../context/articles/reducer";
 import { Sport } from "../../context/sports/reducer";
 import { Team } from "../../context/teams/reducer";
 
+import { fetchPreferences } from "../../context/preferences/actions";
+import {
+  usePreferenceDispatch,
+  usePreferenceState,
+} from "../../context/preferences/context";
+
 const Favorites: React.FC = () => {
   const [selectedSport, setSelectedSport] = useState<string>("");
   const [selectedTeam, setSelectedTeam] = useState<string>("");
@@ -22,24 +28,42 @@ const Favorites: React.FC = () => {
   const ArticlesDispatch = useArticleDispatch();
   const SportsDispatch = useSportDispatch();
   const TeamsDispatch = useTeamDispatch();
+  const PreferencesDispatch = usePreferenceDispatch();
 
   useEffect(() => {
     fetchArticles(ArticlesDispatch);
     fetchSports(SportsDispatch);
     fetchTeams(TeamsDispatch);
-  }, [ArticlesDispatch, SportsDispatch, TeamsDispatch]);
+    fetchPreferences(PreferencesDispatch);
+  }, [ArticlesDispatch, SportsDispatch, TeamsDispatch, PreferencesDispatch]);
 
   const state: any = useArticleState();
   const state2: any = useTeamState();
   const state3: any = useSportState();
+  const state4: any = usePreferenceState();
 
   const { articles } = state;
   const { teams } = state2;
   const { sports } = state3;
+  const { preferences } = state4;
 
-  const filteredTeams = selectedSport
-    ? teams.filter((team: Team) => team.plays === selectedSport)
-    : [];
+  const checkAuthentication = () => {
+    return !!localStorage.getItem("authToken");
+  };
+
+  const filteredSports = checkAuthentication()
+    ? sports.filter((sport: Sport) =>
+        preferences.favoriteSports.includes(sport.name),
+      )
+    : sports;
+
+  const filteredTeams = checkAuthentication()
+    ? teams.filter(
+        (team: Team) =>
+          preferences.favoriteTeams.includes(team.name) &&
+          team.plays === selectedSport,
+      )
+    : teams;
 
   const filteredArticles = articles.filter((article: Article) => {
     const isSportMatch =
@@ -54,10 +78,10 @@ const Favorites: React.FC = () => {
 
   return (
     <div>
-      <h2 className="text-2xl font-bold mb-2 mt-2 ml-4 text-blue-600">
+      <h2 className="text-2xl font-bold mb-2 mt-2 ml-2 text-blue-600">
         Favorites
       </h2>
-      <div className="overflow-y-auto p-4">
+      <div>
         <div className="flex flex-col space-y-4">
           <div className="flex flex-col space-y-2">
             <select
@@ -66,7 +90,7 @@ const Favorites: React.FC = () => {
               className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
             >
               <option value="">Select a Sport</option>
-              {sports.map((sport: Sport) => (
+              {filteredSports.map((sport: Sport) => (
                 <option key={sport.id} value={sport.name}>
                   {sport.name}
                 </option>
@@ -90,7 +114,7 @@ const Favorites: React.FC = () => {
           </div>
         </div>
 
-        <div>
+        <div style={{ height: "500px", overflowY: "scroll" }}>
           {filteredArticles.map((article: Article) => (
             <div key={article.id} className="bg-white p-4 m-2 rounded mt-4">
               <h3 className="text-lg font-bold text-blue-600">

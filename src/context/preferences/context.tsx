@@ -11,10 +11,10 @@ const PreferenceStateContext = createContext<PreferenceState | undefined>(
   undefined,
 );
 
-type PreferenceDispatch = React.Dispatch<PreferenceActions>;
+export type PreferenceDispatch = React.Dispatch<PreferenceActions>;
 
-const PreferenceDispatchContext = createContext<PreferenceDispatch | undefined>(
-  undefined,
+const PreferenceDispatchContext = createContext<PreferenceDispatch>(
+  {} as PreferenceDispatch,
 );
 
 export const PreferenceProvider: React.FC<React.PropsWithChildren> = ({

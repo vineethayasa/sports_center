@@ -1,35 +1,64 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { fetchArticles } from "../../context/articles/actions";
 import { useArticleDispatch } from "../../context/articles/context";
-
 import { fetchSports } from "../../context/sports/actions";
 import { useSportDispatch, useSportState } from "../../context/sports/context";
 import ArticlesListItems from "./ArticlesListItems";
+import {
+  usePreferenceDispatch,
+  usePreferenceState,
+} from "../../context/preferences/context";
+import { fetchPreferences } from "../../context/preferences/actions";
+import { Sport } from "../../context/sports/reducer";
 
 const ArticlesList: React.FC = () => {
   const dispatchArticles = useArticleDispatch();
-
-  useEffect(() => {
-    fetchArticles(dispatchArticles);
-  }, []);
-
   const dispatchSports = useSportDispatch();
+  const dispatchPreferences = usePreferenceDispatch();
+
+  const [filteredSports, setFilteredSports] = useState<string[]>([]);
 
   useEffect(() => {
+    const isAuthenticated = checkAuthentication();
+
+    fetchArticles(dispatchArticles);
     fetchSports(dispatchSports);
-  }, []);
+
+    if (isAuthenticated) {
+      fetchPreferences(dispatchPreferences);
+    }
+  }, [dispatchArticles, dispatchSports, dispatchPreferences]);
 
   const state: any = useSportState();
-  console.log(state);
   const { sports } = state;
-  console.log(sports);
-  console.log(Array.isArray(sports));
+
+  const state2: any = usePreferenceState();
+  const { preferences } = state2;
+
+  useEffect(() => {
+    if (preferences && preferences.favoriteSports) {
+      const commonSports = sports.filter((sport: Sport) =>
+        preferences.favoriteSports.includes(sport.name),
+      );
+      setFilteredSports(commonSports);
+    }
+  }, [preferences, sports]);
+
+  const checkAuthentication = () => {
+    let authToken = false;
+
+    if (localStorage.getItem("authToken")) {
+      authToken = true;
+    }
+    return !!authToken;
+  };
 
   return (
     <div>
-      <ArticlesListItems sports={sports} />
+      <ArticlesListItems
+        sports={filteredSports.length ? filteredSports : sports}
+      />
     </div>
   );
 };
