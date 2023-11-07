@@ -57,24 +57,60 @@ const Favorites: React.FC = () => {
       )
     : sports;
 
-  const filteredTeams = checkAuthentication()
+  let filteredTeams = checkAuthentication()
     ? teams.filter(
         (team: Team) =>
           preferences.favoriteTeams.includes(team.name) &&
           team.plays === selectedSport,
       )
-    : teams;
+    : teams.filter((team: Team) => team.plays === selectedSport);
 
-  const filteredArticles = articles.filter((article: Article) => {
+  // const filterArticlesByPreferences = (article: Article) => {
+  //   if (preferences && preferences.favoriteTeams && preferences.favoriteSports) {
+  //     const articleTeams = article.teams.map((team: Team) => team.name);
+  //     if (
+  //       articleTeams.some((team) => preferences.favoriteTeams.includes(team))
+  //     ) {
+  //       return true;
+  //     }
+  //     return preferences.favoriteSports.includes(article.sport.name);
+  //   } else if (preferences && preferences.favoriteTeams) {
+  //     const articleTeams = article.teams.map((team: Team) => team.name);
+  //     return articleTeams.some((team) => preferences.favoriteTeams.includes(team));
+  //   } else if (preferences && preferences.favoriteSports) {
+  //     return preferences.favoriteSports.includes(article.sport.name);
+  //   }
+  //   return true;
+  // };
+
+  const filterArticlesByPreferencesTeam = (article: Article) => {
+    if (preferences && preferences.favoriteTeams) {
+      const articleTeams = article.teams.map((team: Team) => team.name);
+      return articleTeams.some((team) =>
+        preferences.favoriteTeams.includes(team),
+      );
+    }
+    return true;
+  };
+
+  let filteredArticles = articles.filter((article: Article) => {
     const isSportMatch =
       selectedSport === "" || article.sport.name === selectedSport;
 
     const isTeamMatch =
       selectedTeam === "" ||
       article.teams.some((team: Team) => team.name === selectedTeam);
-
     return isSportMatch && isTeamMatch;
   });
+
+  if (checkAuthentication() && selectedTeam === "" && selectedSport === "") {
+    filteredArticles = articles.filter((article: Article) =>
+      filterArticlesByPreferencesTeam(article),
+    );
+  }
+  if (checkAuthentication() && selectedSport && filteredTeams.length === 0) {
+    filteredTeams = teams.filter((team: Team) => team.plays === selectedSport);
+  }
 
   return (
     <div>

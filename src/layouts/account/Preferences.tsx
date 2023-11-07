@@ -41,7 +41,7 @@ const Preferences: React.FC = () => {
   }, [dispatchPreferences, dispatchSports, dispatchTeams]);
 
   const state: any = usePreferenceState();
-  const { preferences } = state;
+  const { preferences, isLoading } = state;
 
   const state2: any = useSportState();
   const { sports } = state2;
@@ -54,18 +54,20 @@ const Preferences: React.FC = () => {
   };
 
   useEffect(() => {
-    if (preferences.favoriteSports && preferences.favoriteSports.length > 0) {
-      setSelectedSports(preferences.favoriteSports);
-    } else {
-      setSelectedSports(sports.map((sport: Sport) => sport.name));
-    }
+    if (!isLoading) {
+      if (preferences.favoriteSports && preferences.favoriteSports.length > 0) {
+        setSelectedSports(preferences.favoriteSports);
+      } else {
+        setSelectedSports(sports.map((sport: Sport) => sport.name));
+      }
 
-    if (preferences.favoriteTeams && preferences.favoriteTeams.length > 0) {
-      setSelectedTeams(preferences.favoriteTeams);
-    } else {
-      setSelectedTeams(teams.map((team: Team) => team.name));
+      if (preferences.favoriteTeams && preferences.favoriteTeams.length > 0) {
+        setSelectedTeams(preferences.favoriteTeams);
+      } else {
+        setSelectedTeams(teams.map((team: Team) => team.name));
+      }
     }
-  }, [preferences, sports, teams]);
+  }, [preferences, sports, teams, isLoading]);
 
   const openDialog = () => {
     if (authenticated) {
@@ -170,7 +172,10 @@ const Preferences: React.FC = () => {
                         <input
                           type="checkbox"
                           className="form-checkbox text-blue-600"
-                          checked={selectedSports.includes(sport.name)}
+                          checked={
+                            selectedSports.length === 0 ||
+                            selectedSports.includes(sport.name)
+                          }
                           onChange={() => handleSportCheckboxChange(sport.name)}
                         />
                         <span className="ml-2">{sport.name}</span>
@@ -184,7 +189,10 @@ const Preferences: React.FC = () => {
                         <input
                           type="checkbox"
                           className="form-checkbox text-blue-600"
-                          checked={selectedSports.includes(sport.name)}
+                          checked={
+                            selectedSports.length === 0 ||
+                            selectedSports.includes(sport.name)
+                          }
                           onChange={() => handleSportCheckboxChange(sport.name)}
                         />
                         <span className="ml-2">{sport.name}</span>
@@ -206,7 +214,10 @@ const Preferences: React.FC = () => {
                         <input
                           type="checkbox"
                           className="form-checkbox text-blue-600"
-                          checked={selectedTeams.includes(team.name)}
+                          checked={
+                            selectedTeams.length === 0 ||
+                            selectedTeams.includes(team.name)
+                          }
                           onChange={() => handleTeamCheckboxChange(team.name)}
                         />
                         <span className="ml-2">{team.name}</span>
@@ -220,7 +231,10 @@ const Preferences: React.FC = () => {
                         <input
                           type="checkbox"
                           className="form-checkbox text-blue-600"
-                          checked={selectedTeams.includes(team.name)}
+                          checked={
+                            selectedTeams.length === 0 ||
+                            selectedTeams.includes(team.name)
+                          }
                           onChange={() => handleTeamCheckboxChange(team.name)}
                         />
                         <span className="ml-2">{team.name}</span>

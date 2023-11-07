@@ -16,8 +16,6 @@ const ArticlesListItems: React.FC<Props> = ({ sports }) => {
 
   const state2: any = usePreferenceState();
   const { preferences } = state2;
-  console.log(preferences);
-  console.log("preferences");
 
   const checkAuthentication = () => {
     return !!localStorage.getItem("authToken");
@@ -26,7 +24,7 @@ const ArticlesListItems: React.FC<Props> = ({ sports }) => {
   const { articles, isLoading, isError, errorMessage } = state;
   const [selectedSport, setSelectedSport] = useState<number | null>(null);
 
-  const filterArticlesByPreferences = (article: Article) => {
+  const filterArticlesByPreferencesTeam = (article: Article) => {
     if (preferences && preferences.favoriteTeams) {
       const articleTeams = article.teams.map((team: Team) => team.name);
       return articleTeams.some((team) =>
@@ -36,17 +34,48 @@ const ArticlesListItems: React.FC<Props> = ({ sports }) => {
     return true;
   };
 
-  const filteredArticles = checkAuthentication()
+  // const filterArticlesByPreferences = (article: Article) => {
+  //   if (preferences && preferences.favoriteTeams) {
+  //     const articleTeams = article.teams.map((team: Team) => team.name);
+
+  //     if (articleTeams.some((team) => preferences.favoriteTeams.includes(team))) {
+  //       return true;
+  //     }
+  //   }
+  //   if (preferences && preferences.favoriteSports) {
+  //     if (
+  //       preferences.favoriteSports.includes(article.sport.name) &&
+  //       !article.teams.some((team:Team) =>
+  //         preferences.favoriteTeams.some((favTeam:any) =>
+  //           favTeam === team.name && favTeam.plays === article.sport.name
+  //         )
+  //       )
+  //     ) {
+  //       return true;
+  //     }
+  //   }
+
+  //   return false;
+  // };
+
+  let filteredArticles = checkAuthentication()
     ? selectedSport
       ? articles
           .filter((article: Article) => article.sport.id === selectedSport)
-          .filter((article: Article) => filterArticlesByPreferences(article))
+          .filter((article: Article) =>
+            filterArticlesByPreferencesTeam(article),
+          )
       : articles.filter((article: Article) =>
-          filterArticlesByPreferences(article),
+          filterArticlesByPreferencesTeam(article),
         )
-    : articles.filter((article: Article) =>
-        filterArticlesByPreferences(article),
-      );
+    : articles;
+
+  if (checkAuthentication() && selectedSport && filteredArticles.length === 0) {
+    // No articles were filtered for the selected sport, so include all articles for that sport
+    filteredArticles = articles.filter(
+      (article: Article) => article.sport.id === selectedSport,
+    );
+  }
 
   return (
     <>

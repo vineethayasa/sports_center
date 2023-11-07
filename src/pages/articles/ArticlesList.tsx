@@ -46,12 +46,7 @@ const ArticlesList: React.FC = () => {
   }, [preferences, sports]);
 
   const checkAuthentication = () => {
-    let authToken = false;
-
-    if (localStorage.getItem("authToken")) {
-      authToken = true;
-    }
-    return !!authToken;
+    return !!localStorage.getItem("authToken");
   };
 
   return (
