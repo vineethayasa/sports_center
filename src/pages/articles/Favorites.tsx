@@ -53,14 +53,14 @@ const Favorites: React.FC = () => {
 
   const filteredSports = checkAuthentication()
     ? sports.filter((sport: Sport) =>
-        preferences.favoriteSports.includes(sport.name),
+    preferences.favoriteSports && preferences.favoriteSports.includes(sport.name),
       )
     : sports;
 
   let filteredTeams = checkAuthentication()
     ? teams.filter(
         (team: Team) =>
-          preferences.favoriteTeams.includes(team.name) &&
+        preferences.favoriteTeams && preferences.favoriteTeams.includes(team.name) &&
           team.plays === selectedSport,
       )
     : teams.filter((team: Team) => team.plays === selectedSport);
@@ -81,7 +81,7 @@ const Favorites: React.FC = () => {
     } else if (preferences && preferences.favoriteTeams) {
       const articleTeams = article.teams.map((team: Team) => team.name);
       return articleTeams.some((team) =>
-        preferences.favoriteTeams.includes(team),
+      preferences.favoriteTeams && preferences.favoriteTeams.includes(team),
       );
     } else if (preferences && preferences.favoriteSports) {
       return preferences.favoriteSports.includes(article.sport.name);
