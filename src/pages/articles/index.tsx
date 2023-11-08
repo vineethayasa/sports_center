@@ -1,5 +1,7 @@
-import ArticlesList from "./ArticlesList";
-import Favorites from "./Favorites";
+import React, { Suspense } from "react";
+const ArticlesList = React.lazy(() => import("./ArticlesList"));
+const Favorites = React.lazy(() => import("./Favorites"));
+import ErrorBoundary from "../../components/ErrorBoundary";
 
 const Articles = () => {
   return (
@@ -8,10 +10,22 @@ const Articles = () => {
         <div>
           <h2 className="text-2xl font-bold mb-2 mt-2">Trending News</h2>
         </div>
-        <ArticlesList />
+        <ErrorBoundary>
+          <Suspense
+            fallback={<div className="suspense-loading">Loading...</div>}
+          >
+            <ArticlesList />
+          </Suspense>
+        </ErrorBoundary>
       </div>
       <div className="w-1/4">
-        <Favorites />
+        <ErrorBoundary>
+          <Suspense
+            fallback={<div className="suspense-loading">Loading...</div>}
+          >
+            <Favorites />
+          </Suspense>
+        </ErrorBoundary>
       </div>
     </div>
   );
