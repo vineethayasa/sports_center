@@ -19,13 +19,13 @@ const Articles = () => {
         </ErrorBoundary>
       </div>
       <div className="w-1/4">
-        <ErrorBoundary>
+        {/* <ErrorBoundary> */}
           <Suspense
             fallback={<div className="suspense-loading">Loading...</div>}
           >
             <Favorites />
           </Suspense>
-        </ErrorBoundary>
+        {/* </ErrorBoundary> */}
       </div>
     </div>
   );
