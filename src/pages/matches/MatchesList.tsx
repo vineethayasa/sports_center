@@ -20,7 +20,7 @@ const MatchesList: React.FC = () => {
   }, [dispatchMatches, dispatchPreferences]);
 
   const state: any = useMatchState();
-  const { matches } = state;
+  const { matches, isLoading } = state;
 
   const state2: any = usePreferenceState();
   const { preferences } = state2;
@@ -48,6 +48,10 @@ const MatchesList: React.FC = () => {
     : matches.filter((match: Match) => {
         return match.isRunning;
       });
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div className="overflow-x-auto p-4">

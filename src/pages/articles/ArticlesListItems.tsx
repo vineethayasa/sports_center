@@ -34,29 +34,32 @@ const ArticlesListItems: React.FC<Props> = ({ sports }) => {
     return true;
   };
 
-  // const filterArticlesByPreferences = (article: Article) => {
-  //   if (preferences && preferences.favoriteTeams) {
-  //     const articleTeams = article.teams.map((team: Team) => team.name);
+  const filterArticlesByPreferences = (article: Article) => {
+    if (preferences && preferences.favoriteTeams) {
+      const articleTeams = article.teams.map((team: Team) => team.name);
 
-  //     if (articleTeams.some((team) => preferences.favoriteTeams.includes(team))) {
-  //       return true;
-  //     }
-  //   }
-  //   if (preferences && preferences.favoriteSports) {
-  //     if (
-  //       preferences.favoriteSports.includes(article.sport.name) &&
-  //       !article.teams.some((team:Team) =>
-  //         preferences.favoriteTeams.some((favTeam:any) =>
-  //           favTeam === team.name && favTeam.plays === article.sport.name
-  //         )
-  //       )
-  //     ) {
-  //       return true;
-  //     }
-  //   }
+      if (
+        articleTeams.some((team) => preferences.favoriteTeams.includes(team))
+      ) {
+        return true;
+      }
+    }
+    if (preferences && preferences.favoriteSports) {
+      if (
+        preferences.favoriteSports.includes(article.sport.name) &&
+        !article.teams.some((team: Team) =>
+          preferences.favoriteTeams.some(
+            (favTeam: any) =>
+              favTeam === team.name && favTeam.plays === article.sport.name,
+          ),
+        )
+      ) {
+        return true;
+      }
+    }
 
-  //   return false;
-  // };
+    return false;
+  };
 
   let filteredArticles = checkAuthentication()
     ? selectedSport
@@ -66,8 +69,10 @@ const ArticlesListItems: React.FC<Props> = ({ sports }) => {
             filterArticlesByPreferencesTeam(article),
           )
       : articles.filter((article: Article) =>
-          filterArticlesByPreferencesTeam(article),
+          filterArticlesByPreferences(article),
         )
+    : selectedSport
+    ? articles.filter((article: Article) => article.sport.id === selectedSport)
     : articles;
 
   if (checkAuthentication() && selectedSport && filteredArticles.length === 0) {

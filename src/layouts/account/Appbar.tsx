@@ -12,7 +12,7 @@ let userNavigation = [
 
 const userNavigation2 = [
   { name: "Sign out", href: "/logout" },
-  // { name: "Change Password", href: "/" },
+  { name: "Change Password", href: "/changePassword" },
 ];
 
 const classNames = (...classes: string[]): string =>

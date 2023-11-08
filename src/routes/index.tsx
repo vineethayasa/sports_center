@@ -6,6 +6,7 @@ import Logout from "../pages/logout";
 import Articles from "../pages/articles";
 import Matches from "../pages/matches";
 import Notfound from "../pages/Notfound";
+import ChangePassword from "../layouts/account/ChangePassword";
 
 const router = createBrowserRouter([
   {
@@ -34,6 +35,10 @@ const router = createBrowserRouter([
   {
     path: "/logout",
     element: <Logout />,
+  },
+  {
+    path: "/changePassword",
+    element: <ChangePassword />,
   },
   {
     path: "*",

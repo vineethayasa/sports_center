@@ -75,8 +75,13 @@ const SigninForm = () => {
           Sign In
         </button>
         <div className="mt-4 text-center">
-          <div className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-md focus:outline-none focus:shadow-outline-blue">
+          <div className="w-full bg-white text-blue-700 font-semibold py-2 px-4 rounded-md">
             <Link to="/">Browse Without Signing In</Link>
+          </div>
+        </div>
+        <div className="text-center">
+          <div className="w-full bg-white text-blue-700 font-semibold py-2 px-4 rounded-md">
+            <Link to="/signup">New User? Sign Up Here</Link>
           </div>
         </div>
       </form>
