@@ -1,5 +1,5 @@
-import React from "react";
-import SignupForm from "./SignupForm";
+import React, { Suspense } from "react";
+const SignupForm = React.lazy(() => import("./SignupForm"));
 
 const Signup: React.FC = () => {
   return (
@@ -8,7 +8,9 @@ const Signup: React.FC = () => {
         <h1 className="text-3xl font-bold text-center text-gray-800 mb-8">
           Sign up
         </h1>
-        <SignupForm />
+        <Suspense fallback={<div className="suspense-loading">Loading...</div>}>
+          <SignupForm />
+        </Suspense>
       </div>
     </div>
   );

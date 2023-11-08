@@ -2,6 +2,10 @@ import { API_ENDPOINT } from "../../config/constants";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm, SubmitHandler } from "react-hook-form";
 
+import { usePreferenceDispatch } from "../../context/preferences/context";
+import { initialPreferences } from "../../context/preferences/initialdata";
+import { updatePreferences } from "../../context/preferences/actions";
+
 type Inputs = {
   userName: string;
   userEmail: string;
@@ -14,6 +18,23 @@ const SignupForm = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<Inputs>();
+
+  const dispatchPreferences = usePreferenceDispatch();
+
+  const checkAuthentication = () => {
+    return !!localStorage.getItem("authToken");
+  };
+
+  const handleSavePreferences = () => {
+    const updatedPreferences = initialPreferences;
+
+    if (checkAuthentication()) {
+      updatePreferences(dispatchPreferences, updatedPreferences);
+      console.log("Preferences updated:", updatedPreferences);
+    } else {
+      console.error("User is not authenticated");
+    }
+  };
 
   const navigate = useNavigate();
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
@@ -36,6 +57,9 @@ const SignupForm = () => {
       const data = await response.json();
       localStorage.setItem("authToken", data.auth_token);
       localStorage.setItem("userData", JSON.stringify(data.user));
+
+      handleSavePreferences();
+
       navigate("/");
       console.log("Sign-up successful");
     } catch (error) {
