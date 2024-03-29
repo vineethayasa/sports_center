@@ -44,8 +44,7 @@ Explore the live demo of the project [here](https://cheerful-mandazi-2aeb03.netl
 - The favorites section, located on the right-hand side, enables users to filter articles by sport and team.
 
 
-![Landing Page](https://raw.githubusercontent.com/vineethayasa/wd301ss/main/landingpage2.png)
-
+![Landing Page](https://raw.githubusercontent.com/vineethayasa/screenshots/main/landingpage2.png)
 
 ### Detailed News Article View
 - Clicking on the "Read More" option on a news article opens a pop-up/modal.
