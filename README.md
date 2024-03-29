@@ -51,11 +51,11 @@ Explore the live demo of the project [here](https://cheerful-mandazi-2aeb03.netl
 - Clicking on the "Read More" option on a news article opens a pop-up/modal.
 - The pop-up displays a detailed view of the news article, including an image and relevant content.
 
-![Article View](https://raw.githubusercontent.com/vineethayasa/wd301ss/main/Screenshot%202024-03-29%20175521.png)
+![Article View](https://raw.githubusercontent.com/vineethayasa/screenshots/main/articleview.png)
 
 ### Preferences Screen
 - The preferences screen is accessible from the landing page as a pop-up/modal.
 - Users can select the sports they want to receive news articles from.
 - Users can choose specific teams they are interested in and want to read articles about.
 
-![Preferences](https://raw.githubusercontent.com/vineethayasa/wd301ss/main/Screenshot%202024-03-29%20175452.png)
+![Preferences](https://raw.githubusercontent.com/vineethayasa/screenshots/main/preferences.png)
